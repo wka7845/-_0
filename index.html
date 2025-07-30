@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>财富增长模拟器（移动版）</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .container { max-width: 100%; }
+    h2 { font-size: 1.5em; }
+    label { display: block; margin: 12px 0 6px; font-weight: bold; }
+    input { width: 100%; padding: 8px; font-size: 1em; box-sizing: border-box; }
+    button { margin-top: 16px; width: 100%; padding: 10px; font-size: 1.1em; background-color: #3a82f7; color: white; border: none; border-radius: 4px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; font-size: 0.9em; min-width: 480px; }
+    th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: right; white-space: nowrap; }
+    th { background-color: #f0f0f0; }
+    .table-wrapper { overflow-x: auto; }
+    .tip { font-size: 0.9em; color: #666; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>📈 财富增长模拟器</h2>
+  <p class="tip">💡 单位为“元”，结果显示为“万元”</p>
+
+  <label>初始存款</label>
+  <input id="base_balance" type="number" value="100000" />
+
+  <label>第一年工资</label>
+  <input id="salary" type="number" value="100000" />
+
+  <label>工资年增长率（如0.05代表5%）</label>
+  <input id="salary_growth" type="number" step="0.01" value="0.05" />
+
+  <label>工资储蓄比例（如0.4代表40%）</label>
+  <input id="save_ratio" type="number" step="0.01" value="0.4" />
+
+  <label>年化收益率（如0.06代表6%）</label>
+  <input id="interest_rate" type="number" step="0.01" value="0.06" />
+
+  <label>每年复利次数（如12代表月复利）</label>
+  <input id="compound_times" type="number" value="12" />
+
+  <label>投资年限（最多30年）</label>
+  <input id="years" type="number" value="20" min="1" max="30" />
+
+  <button onclick="calculate()">点击计算未来财富</button>
+
+  <div class="table-wrapper">
+    <table id="result">
+      <thead>
+        <tr>
+          <th>年份</th>
+          <th>年薪</th>
+          <th>当年投入</th>
+          <th>年末资产</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+function formatWan(x) {
+  return (x / 10000).toFixed(1);
+}
+
+function calculate() {
+  let base = parseFloat(document.getElementById("base_balance").value);
+  let salary = parseFloat(document.getElementById("salary").value);
+  let growth = parseFloat(document.getElementById("salary_growth").value);
+  let ratio = parseFloat(document.getElementById("save_ratio").value);
+  let rate = parseFloat(document.getElementById("interest_rate").value);
+  let n = parseInt(document.getElementById("compound_times").value);
+  let years = parseInt(document.getElementById("years").value);
+
+  let tbody = document.querySelector("#result tbody");
+  tbody.innerHTML = "";
+
+  for (let i = 1; i <= years; i++) {
+    let contribution = salary * ratio;
+    base += contribution;
+    base *= Math.pow(1 + rate / n, n);
+
+    let row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${i}</td>
+      <td>${formatWan(salary)}</td>
+      <td>${formatWan(contribution)}</td>
+      <td>${formatWan(base)}</td>
+    `;
+    tbody.appendChild(row);
+
+    salary *= (1 + growth);
+  }
+}
+</script>
+</body>
+</html>
