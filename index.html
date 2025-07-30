@@ -20,6 +20,7 @@
 </head>
 <body>
 <div class="container">
+  <h1>抖音小红书快手bilibli:关注安心生活所</h1>
   <h2>📈 财富增长模拟器</h2>
   <p class="tip">💡 单位为“元”，结果显示为“万元”</p>
 
@@ -86,9 +87,9 @@ function calculate() {
     let row = document.createElement("tr");
     row.innerHTML = `
       <td>${i}</td>
-      <td>${formatWan(salary)}</td>
-      <td>${formatWan(contribution)}</td>
-      <td>${formatWan(base)}</td>
+      <td>${formatWan(salary)}万</td>
+      <td>${formatWan(contribution)}万</td>
+      <td>${formatWan(base)}万</td>
     `;
     tbody.appendChild(row);
 
