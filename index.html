@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html lang="zh">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>财富增长模拟器（移动版）</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>财富增长模拟器（移动版）</title>
+  <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     .container { max-width: 100%; }
     h2 { font-size: 1.5em; }
@@ -18,51 +17,51 @@
     .table-wrapper { overflow-x: auto; }
     .tip { font-size: 0.9em; color: #666; margin-bottom: 10px; }
   </style>
-
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?09c5d64dadbb9b6250ba930758275e8a2";
-      var s = document.getElementsByTagName("script")[0]; 
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
 </head>
 <body>
 <div class="container">
-<h1>抖音小红书快手bilibli:关注安心生活所</h1>
-<h2>📈 财富增长模拟器</h2>
-<p class="tip">💡 单位为“元”，结果显示为“万元”</p>
-<label>初始存款</label>
-<input id="base_balance" type="number" value="100000"/>
-<label>第一年工资</label>
-<input id="salary" type="number" value="100000"/>
-<label>工资年增长率（如0.05代表5%）</label>
-<input id="salary_growth" step="0.01" type="number" value="0.05"/>
-<label>工资储蓄比例（如0.4代表40%）</label>
-<input id="save_ratio" step="0.01" type="number" value="0.4"/>
-<label>年化收益率（如0.06代表6%）</label>
-<input id="interest_rate" step="0.01" type="number" value="0.06"/>
-<label>每年复利次数（如12代表月复利）</label>
-<input id="compound_times" type="number" value="12"/>
-<label>投资年限（最多30年）</label>
-<input id="years" max="30" min="1" type="number" value="20"/>
-<button onclick="calculate()">点击计算未来财富</button>
-<div class="table-wrapper">
-<table id="result">
-<thead>
-<tr>
-<th>年份</th>
-<th>年薪</th>
-<th>当年投入</th>
-<th>年末资产</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+  <h1>抖音小红书快手bilibli关注：安心观察室</h1>
+  <h2>📈 财富增长模拟器</h2>
+  <p class="tip">💡 单位为“元”，结果显示为“万元”</p>
+
+  <label>初始存款</label>
+  <input id="base_balance" type="number" value="100000" />
+
+  <label>每月工资</label>
+  <input id="monthly_salary" type="number" value="8333" />
+
+  <label>工资年增长率（如0.05代表5%）</label>
+  <input id="salary_growth" type="number" step="0.01" value="0.05" />
+
+  <label>工资储蓄比例（如0.4代表40%）</label>
+  <input id="save_ratio" type="number" step="0.01" value="0.4" />
+
+  <label>年化收益率（如0.06代表6%）</label>
+  <input id="interest_rate" type="number" step="0.01" value="0.06" />
+
+  <label>每年复利次数（如12代表月复利）</label>
+  <input id="compound_times" type="number" value="12" />
+
+  <label>投资年限（最多30年）</label>
+  <input id="years" type="number" value="20" min="1" max="30" />
+
+  <button onclick="calculate()">点击计算未来财富</button>
+
+  <div class="table-wrapper">
+    <table id="result">
+      <thead>
+        <tr>
+          <th>年份</th>
+          <th>年薪</th>
+          <th>当年投入</th>
+          <th>年末资产</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </div>
-</div>
+
 <script>
 function formatWan(x) {
   return (x / 10000).toFixed(1);
@@ -70,7 +69,8 @@ function formatWan(x) {
 
 function calculate() {
   let base = parseFloat(document.getElementById("base_balance").value);
-  let salary = parseFloat(document.getElementById("salary").value);
+  let monthly_salary = parseFloat(document.getElementById("monthly_salary").value);
+  let salary = monthly_salary * 12;
   let growth = parseFloat(document.getElementById("salary_growth").value);
   let ratio = parseFloat(document.getElementById("save_ratio").value);
   let rate = parseFloat(document.getElementById("interest_rate").value);
